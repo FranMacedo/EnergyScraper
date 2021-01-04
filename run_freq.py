@@ -11,6 +11,6 @@ if today_date.day < 10:
 else:
     date_start = today_date - relativedelta(day=1)
 
-run_mgmt('EGEAC', date_start=date_start, replace=True, headless=False)
-run_mgmt('SCML', date_start=date_start, replace=True, headless=False)
-run_mgmt('CML', date_start=date_start, replace=True, headless=False)
+run_mgmt('EGEAC', date_start=date_start, replace=True, headless=True)
+run_mgmt('SCML', date_start=date_start, replace=True, headless=True)
+run_mgmt('CML', date_start=date_start, replace=True, headless=True)
