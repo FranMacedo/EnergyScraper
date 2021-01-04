@@ -52,8 +52,11 @@ class EdpCrawler():
             print('\n\nNot going for any other than BTE and MT\n\n')
             raise ValueError
 
-        logging.info(
-            f'\n\n\nTrying {cpe} || {self.date_range[0].strftime("%m-%Y")} || {self.date_range[-1].strftime("%m-%Y")}\n\n')
+        if len(date_range) == 1:
+            logging.info(f'\n\n\nTrying {cpe} || {self.date_range[0].strftime("%m-%Y")}\n\n')
+        else:
+            logging.info(
+                f'\n\n\nTrying {cpe} || {self.date_range[0].strftime("%m-%Y")} || {self.date_range[-1].strftime("%m-%Y")}\n\n')
 
         from crawler_tools import CrawlerTools
 

@@ -47,9 +47,12 @@ def run_inst(cpe, date_start=dt(2020, 1, 1), date_end=dt.now(), replace=True, he
         print(e)
         return
 
-    bot.login()
+    try:
+        bot.login()
+        fail_date_range = bot.multiple_tries(nr_tries)
+    except:
+        fail_date_range = try_date_range
 
-    fail_date_range = bot.multiple_tries(nr_tries)
     bot.exit()
     logging.shutdown()
 
@@ -69,7 +72,7 @@ def run_inst(cpe, date_start=dt(2020, 1, 1), date_end=dt.now(), replace=True, he
         logging.info(f'FAIL IN {", ".join(fail_date_range)}')
 
 
-def run_mgmt(mgmt, date_start=dt(2020, 1, 1), date_end=dt(2020, 12, 1), replace=True, headless=True, nr_tries=1):
+def run_mgmt(mgmt, date_start=dt(2020, 1, 1), date_end=dt.now(), replace=True, headless=True, nr_tries=1):
     from db_connection import GetDB
     from edp_crawler import EdpCrawler
     db = GetDB()
@@ -84,10 +87,10 @@ def run_mgmt(mgmt, date_start=dt(2020, 1, 1), date_end=dt(2020, 12, 1), replace=
             return
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
     # run_mgmt('EGEAC')
     # cpe = "PT0002000038740856ZG"
-    run_mgmt('EGEAC', date_start=dt(2020, 10, 1), replace=False, headless=True)
+    # run_mgmt('EGEAC', date_start=dt(2020, 10, 1), replace=False, headless=False)
 
     # cpe = 'PT0002000065174589LK'
     # run_inst(cpe, date_start=dt(2020, 10, 1), replace=True, headless=False)
