@@ -97,7 +97,7 @@ class Setup():
         }
         prefs = {"download.default_directory": self.downloads_path}
         chrome_options.add_experimental_option("prefs", prefs)
-        self.driver = webdriver.Chrome(
+        self.driver = webdriver.Chrome("chromedriver/chromedriver.exe",
             options=chrome_options, seleniumwire_options=seleniumwire_options, service_log_path='NUL')
 
         if not self.driver.command_executor:
@@ -131,7 +131,7 @@ class Setup():
         prefs = {"download.default_directory": self.downloads_path, "download.prompt_for_download": False, "profile.default_content_settings.popups": 0,
                  "safebrowsing.enabled": False}
         chrome_options.add_experimental_option("prefs", prefs)
-        self.driver = webdriver.Chrome(
+        self.driver = webdriver.Chrome("chromedriver/chromedriver.exe",
             options=chrome_options, seleniumwire_options=seleniumwire_options, service_log_path='NUL')
         if not self.driver.command_executor:
             logging.error('ERROR INITIALIZING DRIVER')

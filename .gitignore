@@ -1,7 +1,8 @@
 celerybeat.pid
 logs/
 dwnlds/
-
+chromedriver
+chromedriver.exe
 # Django #
 .env
 env/
