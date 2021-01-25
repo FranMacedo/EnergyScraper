@@ -37,7 +37,7 @@ def run_inst(cpe, date_start=dt(2020, 1, 1), date_end=dt.now(), replace=True, he
             print(try_date_range)
         else:
             print('No dates missing')
-            return
+            return None, False
     else:
         try_date_range = date_range
 
@@ -45,11 +45,11 @@ def run_inst(cpe, date_start=dt(2020, 1, 1), date_end=dt.now(), replace=True, he
         bot = EdpCrawler(cpe, try_date_range, replace=replace, headless=headless)
     except Exception as e:
         print(e)
-        return
+        return None, False
 
     try:
         bot.login()
-        fail_date_range = bot.multiple_tries(nr_tries)
+        df, fail_date_range = bot.multiple_tries(nr_tries)
     except:
         fail_date_range = try_date_range
 
@@ -71,6 +71,8 @@ def run_inst(cpe, date_start=dt(2020, 1, 1), date_end=dt.now(), replace=True, he
     if fail_date_range:
         logging.info(f'FAIL IN {", ".join(fail_date_range)}')
 
+    return df, True
+
 
 def run_mgmt(mgmt, date_start=dt(2020, 1, 1), date_end=dt.now(), replace=True, headless=True, nr_tries=1):
     from db_connection import GetDB
@@ -81,14 +83,14 @@ def run_mgmt(mgmt, date_start=dt(2020, 1, 1), date_end=dt.now(), replace=True, h
 
     for cpe in cpes:
         try:
-            run_inst(cpe=cpe, date_start=date_start, date_end=date_end, replace=replace, headless=headless)
+            df = run_inst(cpe=cpe, date_start=date_start, date_end=date_end, replace=replace, headless=headless)
         except Exception as e:
             print(e)
             return
 
 
 # if __name__ == '__main__':
-    # run_mgmt('EGEAC')
+#     run_mgmt('EGEAC')
     # cpe = "PT0002000038740856ZG"
     # run_mgmt('EGEAC', date_start=dt(2020, 10, 1), replace=False, headless=False)
 

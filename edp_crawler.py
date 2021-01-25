@@ -21,6 +21,7 @@ import time
 class EdpCrawler():
 
     def __init__(self, cpe,  date_range, replace=True, headless=True):
+        self.df_total = pd.DataFrame()
         self.replace = replace
         if not date_range:
             print('empty date range... is your date_start before date_end..?')
@@ -121,7 +122,7 @@ class EdpCrawler():
             self.loop_rows()
             if not self.date_range:
                 break
-        return self.date_range
+        return self.df_total, self.date_range
 
     def loop_rows(self):
         rows = self.ct.f_linktext_all(self.inst.cpe)
@@ -160,10 +161,14 @@ class EdpCrawler():
                 logging.error('--No dates requested available in this row')
 
             for date in dates_available:
-                # date = dates_available[8]
+                # date = dates_available[2y]
                 result_month, data_month = self.get_month_data(date)
                 if result_month:
                     dates_success.append(date)
+                    if self.df_total.empty:
+                        self.df_total = data_month.copy()
+                    else:
+                        self.df_total = pd.concat([self.df_total, data_month], join='inner', axis=0)
 
             self.date_range = [d for d in self.date_range if d not in dates_success]
 
