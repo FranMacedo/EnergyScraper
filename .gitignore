@@ -10,7 +10,7 @@ env/
 secret_vars.py
 # keys
 fran_pair.ppk
-
+htmlfiles
 *.log
 *.pot
 *.pyc
